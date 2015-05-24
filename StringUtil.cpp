@@ -36,20 +36,26 @@ const string toLower(const string& s) {
 	return move(_s);
 }
 
-const string lTrim(const string& s, const string& whitespace) {
+const string lTrim(
+		const string& s,
+		const string& whitespace) {
 	string _s{s};
 	_s.erase(0, _s.find_first_not_of(whitespace));
 	return move(_s);
 
 }
 
-const string rTrim(const string& s, const string& whitespace) {
+const string rTrim(
+		const string& s,
+		const string& whitespace) {
 	string _s{s};
 	_s.erase(_s.find_last_not_of(whitespace) + 1);
 	return move(_s);
 }
 
-const string trim(const string& s, const string& whitespace) {
+const string trim(
+		const string& s,
+		const string& whitespace) {
 	string _s{s};
 	_s.erase(0, _s.find_first_not_of(whitespace));
 	_s.erase(_s.find_last_not_of(whitespace) + 1);
@@ -70,6 +76,22 @@ bool endsWith(const string& s, const string& suffix) {
 bool beginsWith(const string& s, const string& prefix) {
     if (prefix.size() > s.size()) return false;
     return equal(s.begin(), s.begin() + prefix.length(), prefix.begin());
+}
+
+vector<string> split(
+		const string& s, const string& separators, bool includeEmpty)
+{
+	vector<string> result;
+	string _s{trim(s)};
+	while (auto pos = _s.find_first_of(separators) != string::npos) {
+		string t = trim(_s.substr(0, pos));
+		_s.erase(0, pos + 1);
+		if (includeEmpty || (!t.empty()))
+			result.push_back(move(t));
+	} // end while //
+	if (includeEmpty || (!_s.empty()))
+		result.push_back(move(_s));
+	return move(result);
 }
 
 } /* namespace StringUtil */

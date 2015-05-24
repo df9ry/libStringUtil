@@ -21,6 +21,7 @@
 #define STRINGUTIL_H_
 
 #include <string>
+#include <vector>
 
 namespace StringUtil {
 
@@ -51,7 +52,7 @@ const std::string toLower(const std::string& s);
  */
 const std::string lTrim(
 		const std::string& s,
-		const std::string whitespace = WHITESPACE);
+		const std::string& whitespace = WHITESPACE);
 
 /**
  * Trim all whitespace from the end
@@ -61,7 +62,7 @@ const std::string lTrim(
  */
 const std::string rTrim(
 		const std::string& s,
-		const std::string whitespace = WHITESPACE);
+		const std::string& whitespace = WHITESPACE);
 
 /**
  * Trim all whitespace from the end
@@ -71,7 +72,7 @@ const std::string rTrim(
  */
 const std::string trim(
 		const std::string& s,
-		const std::string whitespace = WHITESPACE);
+		const std::string& whitespace = WHITESPACE);
 
 /**
  * Remove all occurrences of a character from a string
@@ -108,6 +109,19 @@ bool endsWith(const std::string& s, const std::string& suffix);
  * @return True, when a ends with b, false otherwise
  */
 bool beginsWith(const std::string& s, const std::string& prefix);
+
+/**
+ * Split string into a vector of tokens.
+ * @param s The string to split
+ * @param separators The separator characters
+ * @param includeEmpty Shall empty tokens be included into the
+ *        result
+ * @return Vector of tokens
+ */
+std::vector<std::string> split(
+		const std::string& s,
+		const std::string& separators,
+		bool includeEmpty = false);
 
 } /* namespace StringUtil */
 
