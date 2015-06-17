@@ -21,15 +21,19 @@ else
 
 VPATH = $(SRCDIR)
 
-CXXFLAGS =	-std=c++11 -pedantic -Wall -g -shared -fPIC -rdynamic \
-			-fmessage-length=0
+CXXFLAGS =	-std=c++11 -pedantic -Wall -g -shared \
+			-fmessage-length=0 -fexceptions \
+			-fvisibility=hidden \
+			-DLIBSTRINGUTIL_EXPORTS
 
-LDXFLAGS =	-std=c++11 -pedantic -Wall -g -shared -fPIC -rdynamic \
-			-fmessage-length=0
+LDXFLAGS =	-std=c++11 -pedantic -Wall -g -shared \
+			-fmessage-length=0 -fexceptions \
+			-fvisibility=hidden \
+			-DLIBSTRINGUTIL_EXPORTS
 
 OBJS     =  StringUtil.o
 			
-LIBS     =  -lpthread
+LIBS     =  
 
 TARGET   =	libStringUtil.so
 
