@@ -25,13 +25,15 @@ using namespace std;
 
 namespace StringUtil {
 
-const string toUpper(const string& s) {
+const string toUpper(const string& s)
+{
 	string _s{s};
 	transform(_s.begin(), _s.end(), _s.begin(), ::toupper);
 	return move(_s);
 }
 
-const string toLower(const string& s) {
+const string toLower(const string& s) 
+{
 	string _s{s};
 	transform(_s.begin(), _s.end(), _s.begin(), ::tolower);
 	return move(_s);
@@ -39,7 +41,8 @@ const string toLower(const string& s) {
 
 const string lTrim(
 		const string& s,
-		const string& whitespace) {
+		const string& whitespace) 
+{
 	string _s{s};
 	_s.erase(0, _s.find_first_not_of(whitespace));
 	return move(_s);
@@ -48,7 +51,8 @@ const string lTrim(
 
 const string rTrim(
 		const string& s,
-		const string& whitespace) {
+		const string& whitespace) 
+{
 	string _s{s};
 	_s.erase(_s.find_last_not_of(whitespace) + 1);
 	return move(_s);
@@ -56,25 +60,37 @@ const string rTrim(
 
 const string trim(
 		const string& s,
-		const string& whitespace) {
+		const string& whitespace) 
+{
 	string _s{s};
 	_s.erase(0, _s.find_first_not_of(whitespace));
 	_s.erase(_s.find_last_not_of(whitespace) + 1);
 	return move(_s);
 }
 
-const string remove(const string& s, char c) {
+const string remove(const string& s, char c) 
+{
 	string _s{s};
 	remove_if(_s.begin(), _s.end(), bind1st(equal_to<char>(), c));
 	return move(_s);
 }
 
-bool endsWith(const string& s, const string& suffix) {
+bool contains(const std::string& s, char c)
+{
+	for (auto i = s.begin(); i != s.end(); ++i)
+		if (*i == c)
+			return true;
+	return false;
+}
+
+bool endsWith(const string& s, const string& suffix) 
+{
     if (suffix.size() > s.size()) return false;
     return equal(s.begin() + s.size() - suffix.size(), s.end(), suffix.begin());
 }
 
-bool beginsWith(const string& s, const string& prefix) {
+bool beginsWith(const string& s, const string& prefix) 
+{
     if (prefix.size() > s.size()) return false;
     return equal(s.begin(), s.begin() + prefix.length(), prefix.begin());
 }

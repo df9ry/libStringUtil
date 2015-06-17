@@ -23,26 +23,37 @@
 #include <string>
 #include <vector>
 
+#ifdef LIBSTRINGUTIL_EXPORTS
+# ifdef _WIN32
+#  define LIBSTRINGUTIL_EXPORT __declspec(dllexport)
+# else
+#  define LIBSTRINGUTIL_EXPORT __attribute__ ((dllexport))
+# endif
+#else
+# define LIBSTRINGUTIL_EXPORT
+#endif
+
+
 namespace StringUtil {
 
 /**
  * Normal definition of whitespace chars.
  */
-static const std::string WHITESPACE{ " \t\n\r\f\v" };
+LIBSTRINGUTIL_EXPORT extern const std::string WHITESPACE{ " \t\n\r\f\v" };
 
 /**
  * Convert string to all upper case
  * @param s The string to convert
  * @return Converted string
  */
-const std::string toUpper(const std::string& s);
+LIBSTRINGUTIL_EXPORT const std::string toUpper(const std::string& s);
 
 /**
  * Convert string to all lower case
  * @param s The string to convert
  * @return Converted string
  */
-const std::string toLower(const std::string& s);
+LIBSTRINGUTIL_EXPORT const std::string toLower(const std::string& s);
 
 /**
  * Trim all whitespace from the begin
@@ -50,7 +61,7 @@ const std::string toLower(const std::string& s);
  * @param whitespace Characters considered as whitespace
  * @return Trimmed string
  */
-const std::string lTrim(
+LIBSTRINGUTIL_EXPORT const std::string lTrim(
 		const std::string& s,
 		const std::string& whitespace = WHITESPACE);
 
@@ -60,7 +71,7 @@ const std::string lTrim(
  * @param whitespace Characters considered as whitespace
  * @return Trimmed string
  */
-const std::string rTrim(
+LIBSTRINGUTIL_EXPORT const std::string rTrim(
 		const std::string& s,
 		const std::string& whitespace = WHITESPACE);
 
@@ -70,7 +81,7 @@ const std::string rTrim(
  * @param whitespace Characters considered as whitespace
  * @return Trimmed string
  */
-const std::string trim(
+LIBSTRINGUTIL_EXPORT const std::string trim(
 		const std::string& s,
 		const std::string& whitespace = WHITESPACE);
 
@@ -79,7 +90,7 @@ const std::string trim(
  * @param s The input string
  * @return String with all character c removed
  */
-const std::string remove(const std::string& s, char c);
+LIBSTRINGUTIL_EXPORT const std::string remove(const std::string& s, char c);
 
 /**
  * Test if a string contains a specific char
@@ -87,12 +98,7 @@ const std::string remove(const std::string& s, char c);
  * @param c The character to look for
  * @return If s contains c
  */
-inline bool contains(const std::string& s, char c) {
-	for (auto i = s.begin(); i != s.end(); ++i)
-		if (*i == c)
-			return true;
-	return false;
-}
+LIBSTRINGUTIL_EXPORT bool contains(const std::string& s, char c);
 
 /**
  * Test if a string ends with a specific suffix.
@@ -100,7 +106,7 @@ inline bool contains(const std::string& s, char c) {
  * @param suffix The suffix to look for
  * @return True, when a ends with b, false otherwise
  */
-bool endsWith(const std::string& s, const std::string& suffix);
+LIBSTRINGUTIL_EXPORT bool endsWith(const std::string& s, const std::string& suffix);
 
 /**
  * Test if a string begins with a specific prefix.
@@ -108,7 +114,7 @@ bool endsWith(const std::string& s, const std::string& suffix);
  * @param prefix The suffix to look for
  * @return True, when a ends with b, false otherwise
  */
-bool beginsWith(const std::string& s, const std::string& prefix);
+LIBSTRINGUTIL_EXPORT bool beginsWith(const std::string& s, const std::string& prefix);
 
 /**
  * Split string into a vector of tokens.
@@ -118,7 +124,7 @@ bool beginsWith(const std::string& s, const std::string& prefix);
  *        result
  * @return Vector of tokens
  */
-std::vector<std::string> split(
+LIBSTRINGUTIL_EXPORT std::vector<std::string> split(
 		const std::string& s,
 		const std::string& separators,
 		bool includeEmpty = false);

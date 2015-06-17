@@ -27,9 +27,10 @@ CXXFLAGS =	-std=c++11 -pedantic -Wall -g -shared -fPIC -rdynamic \
 LDXFLAGS =	-std=c++11 -pedantic -Wall -g -shared -fPIC -rdynamic \
 			-fmessage-length=0 -fexceptions -pthread
 
+
 OBJS     =  StringUtil.o
 			
-LIBS     =  -lpthread
+LIBS     =  
 
 TARGET   =	libStringUtil.so
 
