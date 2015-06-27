@@ -3,6 +3,7 @@
 # Eclipse support:
 .cproject
 .project
+.readme.*
 .settings/
 _*/
 

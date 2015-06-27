@@ -21,10 +21,10 @@ else
 
 VPATH = $(SRCDIR)
 
-CXXFLAGS =	-std=c++11 -pedantic -Wall -g -shared -fPIC -rdynamic \
+CXXFLAGS =	-std=c++11 -pedantic -Wall -g -shared -fPIC \
 			-fmessage-length=0 -fexceptions -pthread
 
-LDXFLAGS =	-std=c++11 -pedantic -Wall -g -shared -fPIC -rdynamic \
+LDXFLAGS =	-std=c++11 -pedantic -Wall -g -shared -fPIC \
 			-fmessage-length=0 -fexceptions -pthread
 
 
@@ -43,5 +43,16 @@ $(TARGET):	$(OBJS)
 all: $(TARGET)
 	echo "Build OK"
 
+doc: $(DOCDIR)
+	doxygen ../doxygen.conf
+	( cd ../_doc/latex && make )
+	
+install:
+	sudo cp libStringUtil.so /usr/local/lib/libStringUtil.so.0.1.0
+	( cd /usr/local/lib && sudo chown root:staff libStringUtil.so.0.1.0          )
+	( cd /usr/local/lib && sudo chmod 0755       libStringUtil.so.0.1.0          )
+	( cd /usr/local/lib && sudo ln -sf libStringUtil.so.0.1.0 libStringUtil.so.0 )
+	( cd /usr/local/lib && sudo ln -sf libStringUtil.so.0.1.0 libStringUtil.so   )
+	
 #----- Begin Boilerplate
 endif
