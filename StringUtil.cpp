@@ -25,90 +25,90 @@ using namespace std;
 
 namespace StringUtil {
 
-const string toUpper(const string& s)
-{
-	string _s{s};
-	transform(_s.begin(), _s.end(), _s.begin(), ::toupper);
-	return move(_s);
-}
+	const string toUpper(const string& s)
+	{
+		string _s{s};
+		transform(_s.begin(), _s.end(), _s.begin(), ::toupper);
+		return s;
+	}
 
-const string toLower(const string& s) 
-{
-	string _s{s};
-	transform(_s.begin(), _s.end(), _s.begin(), ::tolower);
-	return move(_s);
-}
+	const string toLower(const string& s)
+	{
+		string _s{s};
+		transform(_s.begin(), _s.end(), _s.begin(), ::tolower);
+		return _s;
+	}
 
-const string lTrim(
-		const string& s,
-		const string& whitespace) 
-{
-	string _s{s};
-	_s.erase(0, _s.find_first_not_of(whitespace));
-	return move(_s);
+	const string lTrim(
+			const string& s,
+			const string& whitespace)
+	{
+		string _s{s};
+		_s.erase(0, _s.find_first_not_of(whitespace));
+		return _s;
 
-}
+	}
 
-const string rTrim(
-		const string& s,
-		const string& whitespace) 
-{
-	string _s{s};
-	_s.erase(_s.find_last_not_of(whitespace) + 1);
-	return move(_s);
-}
+	const string rTrim(
+			const string& s,
+			const string& whitespace)
+	{
+		string _s{s};
+		_s.erase(_s.find_last_not_of(whitespace) + 1);
+		return _s;
+	}
 
-const string trim(
-		const string& s,
-		const string& whitespace) 
-{
-	string _s{s};
-	_s.erase(0, _s.find_first_not_of(whitespace));
-	_s.erase(_s.find_last_not_of(whitespace) + 1);
-	return move(_s);
-}
+	const string trim(
+			const string& s,
+			const string& whitespace)
+	{
+		string _s{s};
+		_s.erase(0, _s.find_first_not_of(whitespace));
+		_s.erase(_s.find_last_not_of(whitespace) + 1);
+		return _s;
+	}
 
-const string remove(const string& s, char c) 
-{
-	string _s{s};
-	remove_if(_s.begin(), _s.end(), bind1st(equal_to<char>(), c));
-	return move(_s);
-}
+	const string remove(const string& s, char c)
+	{
+		string _s{s};
+		remove_if(_s.begin(), _s.end(), bind1st(equal_to<char>(), c));
+		return _s;
+	}
 
-bool contains(const std::string& s, char c)
-{
-	for (auto i = s.begin(); i != s.end(); ++i)
-		if (*i == c)
-			return true;
-	return false;
-}
+	bool contains(const std::string& s, char c)
+	{
+		for (auto i = s.begin(); i != s.end(); ++i)
+			if (*i == c)
+				return true;
+		return false;
+	}
 
-bool endsWith(const string& s, const string& suffix) 
-{
-    if (suffix.size() > s.size()) return false;
-    return equal(s.begin() + s.size() - suffix.size(), s.end(), suffix.begin());
-}
+	bool endsWith(const string& s, const string& suffix)
+	{
+		if (suffix.size() > s.size()) return false;
+		return equal(s.begin() + s.size() - suffix.size(), s.end(), suffix.begin());
+	}
 
-bool beginsWith(const string& s, const string& prefix) 
-{
-    if (prefix.size() > s.size()) return false;
-    return equal(s.begin(), s.begin() + prefix.length(), prefix.begin());
-}
+	bool beginsWith(const string& s, const string& prefix)
+	{
+		if (prefix.size() > s.size()) return false;
+		return equal(s.begin(), s.begin() + prefix.length(), prefix.begin());
+	}
 
-vector<string> split(
-		const string& s, const string& separators, bool includeEmpty)
-{
-	vector<string> result;
-	string _s{trim(s)};
-	while (auto pos = _s.find_first_of(separators) != string::npos) {
-		string t = trim(_s.substr(0, pos));
-		_s.erase(0, pos + 1);
-		if (includeEmpty || (!t.empty()))
-			result.push_back(move(t));
-	} // end while //
-	if (includeEmpty || (!_s.empty()))
-		result.push_back(move(_s));
-	return move(result);
-}
+	vector<string> split(
+			const string& s, const string& separators, bool includeEmpty)
+	{
+		vector<string> result;
+		string _s{trim(s)};
+		while (auto pos = _s.find_first_of(separators) != string::npos) {
+			string t = trim(_s.substr(0, pos));
+			_s.erase(0, pos + 1);
+			if (includeEmpty || (!t.empty()))
+				result.push_back(move(t));
+		} // end while //
+		if (includeEmpty || (!_s.empty()))
+			result.push_back(move(_s));
+		return result;
+	}
 
 } /* namespace StringUtil */

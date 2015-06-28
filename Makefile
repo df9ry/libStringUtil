@@ -27,12 +27,11 @@ CXXFLAGS =	-std=c++11 -pedantic -Wall -g -shared -fPIC \
 LDXFLAGS =	-std=c++11 -pedantic -Wall -g -shared -fPIC \
 			-fmessage-length=0 -fexceptions -pthread
 
-
 OBJS     =  StringUtil.o
 			
-LIBS     =  
+LIBS     =  -lpthread
 
-TARGET   =	libStringUtil.so
+TARGET   =	libStringUtil-dev.so
 
 $(TARGET):	$(OBJS)
 	$(CXX) $(LDXFLAGS) -o $(TARGET) $(OBJS) $(LIBS)
@@ -46,13 +45,41 @@ all: $(TARGET)
 doc: $(DOCDIR)
 	doxygen ../doxygen.conf
 	( cd ../_doc/latex && make )
+
+###
+# Test support
+###
+
+CXTFLAGS =	-std=c++11 -pedantic -Wall -g -fPIC \
+			-fmessage-length=0 -fexceptions -pthread
+
+LDTFLAGS =	-std=c++11 -pedantic -Wall -g -fPIC \
+			-fmessage-length=0 -fexceptions -pthread \
+			-Wl,-rpath,./
+
+test0001.o: test/test0001.cpp
+	$(CXX) $(CXXFLAGS) -c $<	
+
+test0001: all test0001.o
+	$(CXX) $(LDTFLAGS) -o test0001 test0001.o -L. -lStringUtil-dev $(LIBS)
+	
+test: test0001
+	./test0001
+	
+###
+# Install support
+###
 	
 install:
-	sudo cp libStringUtil.so /usr/local/lib/libStringUtil.so.0.1.0
+	sudo cp libStringUtil-dev.so /usr/local/lib/libStringUtil.so.0.1.0
 	( cd /usr/local/lib && sudo chown root:staff libStringUtil.so.0.1.0          )
 	( cd /usr/local/lib && sudo chmod 0755       libStringUtil.so.0.1.0          )
 	( cd /usr/local/lib && sudo ln -sf libStringUtil.so.0.1.0 libStringUtil.so.0 )
 	( cd /usr/local/lib && sudo ln -sf libStringUtil.so.0.1.0 libStringUtil.so   )
+
+	sudo cp ../StringUtil.h /usr/local/include
+	( cd /usr/local/include && sudo chown root:staff StringUtil.h                )
+	( cd /usr/local/include && sudo chmod 0644       StringUtil.h                )
 	
 #----- Begin Boilerplate
 endif
