@@ -4,6 +4,7 @@
 .cproject
 .project
 .readme.*
+*.swp
 .settings/
 _*/
 

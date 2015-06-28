@@ -29,7 +29,7 @@ namespace StringUtil {
 	{
 		string _s{s};
 		transform(_s.begin(), _s.end(), _s.begin(), ::toupper);
-		return s;
+		return _s;
 	}
 
 	const string toLower(const string& s)
@@ -71,7 +71,8 @@ namespace StringUtil {
 	const string remove(const string& s, char c)
 	{
 		string _s{s};
-		remove_if(_s.begin(), _s.end(), bind1st(equal_to<char>(), c));
+		auto new_end = remove_if(_s.begin(), _s.end(), bind1st(equal_to<char>(), c));
+		_s.resize(_s.length() - (_s.end() - new_end));
 		return _s;
 	}
 
@@ -100,7 +101,8 @@ namespace StringUtil {
 	{
 		vector<string> result;
 		string _s{trim(s)};
-		while (auto pos = _s.find_first_of(separators) != string::npos) {
+		size_t pos;
+		while ((pos = _s.find_first_of(separators)) < _s.length()) {
 			string t = trim(_s.substr(0, pos));
 			_s.erase(0, pos + 1);
 			if (includeEmpty || (!t.empty()))

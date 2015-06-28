@@ -1,5 +1,7 @@
 
 Project libStringUtil
+=====================
+
 Copyright (C) 2015  tania@df9ry.de
 
 This program is free software: you can redistribute it and/or modify
@@ -17,6 +19,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ------------------------------------------------------------------------
 
-Release 0.1.0 as of 2015-06-27, DF9RY - Tania (Tania@DF9RY.de)
+Current release:
+----------------
+
+Release 1.0.0 as of 2015-06-28, DF9RY - Tania (Tania@DF9RY.de)
 
 Simple collection of frequently needed string utils.

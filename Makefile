@@ -70,12 +70,12 @@ test: test0001
 # Install support
 ###
 	
-install:
-	sudo cp libStringUtil-dev.so /usr/local/lib/libStringUtil.so.0.1.0
-	( cd /usr/local/lib && sudo chown root:staff libStringUtil.so.0.1.0          )
-	( cd /usr/local/lib && sudo chmod 0755       libStringUtil.so.0.1.0          )
-	( cd /usr/local/lib && sudo ln -sf libStringUtil.so.0.1.0 libStringUtil.so.0 )
-	( cd /usr/local/lib && sudo ln -sf libStringUtil.so.0.1.0 libStringUtil.so   )
+install: all
+	sudo cp libStringUtil-dev.so /usr/local/lib/libStringUtil.so.1.0.0
+	( cd /usr/local/lib && sudo chown root:staff libStringUtil.so.1.0.0          )
+	( cd /usr/local/lib && sudo chmod 0755       libStringUtil.so.1.0.0          )
+	( cd /usr/local/lib && sudo ln -sf libStringUtil.so.1.0.0 libStringUtil.so.1 )
+	( cd /usr/local/lib && sudo ln -sf libStringUtil.so.1.0.0 libStringUtil.so   )
 
 	sudo cp ../StringUtil.h /usr/local/include
 	( cd /usr/local/include && sudo chown root:staff StringUtil.h                )

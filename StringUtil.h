@@ -31,18 +31,17 @@
 #  define LIBSTRINGUTIL_EXPORT __attribute__ ((dllexport))
 # endif
 #else
+/** DLL export macro for Mcrsft */
 # define LIBSTRINGUTIL_EXPORT
 #endif
+
+/** Default whitespace chars */
+#define WHITESPACE " \t\n\r\f\v"
 
 /**
  * All functions in StringUtil are in this namespace.
  */
 namespace StringUtil {
-
-/**
- * Normal definition of whitespace chars.
- */
-LIBSTRINGUTIL_EXPORT extern const std::string WHITESPACE{ " \t\n\r\f\v" };
 
 /**
  * Convert string to all upper case.
@@ -124,8 +123,8 @@ LIBSTRINGUTIL_EXPORT bool beginsWith(const std::string& s, const std::string& pr
  * Split string into a vector of tokens.
  * @param s The string to split.
  * @param separators The separator characters.
- * @param includeEmpty Shall empty tokens be included into the.
- *        result
+ * @param includeEmpty Set true when empty tokens be included into the
+ *        result. Default is false.
  * @return Vector of tokens
  */
 LIBSTRINGUTIL_EXPORT std::vector<std::string> split(
