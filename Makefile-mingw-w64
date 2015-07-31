@@ -15,23 +15,23 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	
 ifeq (,$(filter _%,$(notdir $(CURDIR))))
-include target.mk
+include target-mingw-w64.mk
 else
 #----- End Boilerplate
 
 VPATH = $(SRCDIR)
 
-CXXFLAGS =	-std=c++11 -pedantic -Wall -g -shared -fPIC \
+CXXFLAGS =	-std=c++11 -pedantic -Wall -g -shared \
 			-fmessage-length=0 -fexceptions -pthread
 
-LDXFLAGS =	-std=c++11 -pedantic -Wall -g -shared -fPIC \
+LDXFLAGS =	-std=c++11 -pedantic -Wall -g -shared \
 			-fmessage-length=0 -fexceptions -pthread
 
 OBJS     =  StringUtil.o
 			
 LIBS     =  -lpthread
 
-TARGET   =	libStringUtil.so
+TARGET   =	libStringUtil.dll
 
 $(TARGET):	$(OBJS)
 	$(CXX) $(LDXFLAGS) -o $(TARGET) $(OBJS) $(LIBS)
@@ -42,48 +42,40 @@ $(TARGET):	$(OBJS)
 all: $(TARGET)
 	echo "Build OK"
 
-doc: $(DOCDIR)
-	doxygen ../doxygen.conf
-	( cd ../_doc/latex && make )
-
 ###
 # Test support
 ###
 
-CXTFLAGS =	-std=c++11 -pedantic -Wall -g -fPIC \
+CXTFLAGS =	-std=c++11 -pedantic -Wall -g \
 			-fmessage-length=0 -fexceptions -pthread
 
-LDTFLAGS =	-std=c++11 -pedantic -Wall -g -fPIC \
+LDTFLAGS =	-std=c++11 -pedantic -Wall -g \
 			-fmessage-length=0 -fexceptions -pthread \
 			-Wl,-rpath,./
 
 test0001.o: test/test0001.cpp
 	$(CXX) $(CXXFLAGS) -c $<	
 
-test0001: all test0001.o
-	$(CXX) $(LDTFLAGS) -o test0001 test0001.o -L. -lStringUtil $(LIBS)
+test0001.exe: all test0001.o
+	$(CXX) $(LDTFLAGS) -o test0001.exe test0001.o -L. -lStringUtil $(LIBS)
 	
-test: test0001
-	./test0001
+test: test0001.exe
 	
 ###
 # Install support
 ###
-	
-install: all
-	sudo cp libStringUtil.so /usr/local/lib/libStringUtil.so.1.0.0
-	( cd /usr/local/lib && sudo chown root:staff libStringUtil.so.1.0.0          )
-	( cd /usr/local/lib && sudo chmod 0755       libStringUtil.so.1.0.0          )
-	( cd /usr/local/lib && sudo ln -sf libStringUtil.so.1.0.0 libStringUtil.so.1 )
-	( cd /usr/local/lib && sudo ln -sf libStringUtil.so.1.0.0 libStringUtil.so   )
 
-	sudo cp ../StringUtil.h /usr/local/include
-	( cd /usr/local/include && sudo chown root:staff StringUtil.h                )
-	( cd /usr/local/include && sudo chmod 0644       StringUtil.h                )
+install: all test
+	rm -rf StringUtil-W64-1.0.0
+	mkdir  StringUtil-W64-1.0.0
+	cp /usr/lib/gcc/x86_64-w64-mingw32/4.9-posix/libgcc_s_seh-1.dll StringUtil-W64-1.0.0
+	cp /usr/lib/gcc/x86_64-w64-mingw32/4.9-posix/libstdc++-6.dll    StringUtil-W64-1.0.0
+	cp /usr/x86_64-w64-mingw32/lib/libwinpthread-1.dll              StringUtil-W64-1.0.0
+	cp libStringUtil.dll                                            StringUtil-W64-1.0.0
+	cp test0001.exe StringUtil-W64-1.0.0/StringUtil-test0001.exe
 	
 uninstall:
-	sudo rm -f /usr/local/lib/libStringUtil.so*
-	sudo rm -f /usr/local/include/StringUtil.h
+	rm -rf StringUtil-W64-1.0.0
 	
 #----- Begin Boilerplate
 endif
